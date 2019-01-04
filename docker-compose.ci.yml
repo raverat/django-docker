@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  webapp:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    command: bash -c "python manage.py migrate && python manage.py test"
+    image: raverat/django-docker:1.0
