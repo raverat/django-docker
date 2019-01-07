@@ -5,14 +5,22 @@ services:
     build:
         context: .
         dockerfile: Dockerfile
-    command: bash -c "python manage.py migrate && python manage.py test"
+    command: bash -c "sleep 15; python manage.py migrate && python manage.py test"
     image: raverat/django-docker:1.0
     depends_on:
+      - mysql
+    links:
       - mysql
 
   mysql:
     image: mysql:5.5
     environment:
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: example
       MYSQL_USER: django
       MYSQL_PASSWORD: password
+    healthcheck:
+      test: "mysql -u $$MYSQL_USER -p$$MYSQL_PASSWORD -e 'SELECT 1' $$MYSQL_DATABASE"
+      interval: 3s
+      timeout: 1s
+      retries: 5
