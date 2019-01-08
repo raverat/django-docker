@@ -16,7 +16,7 @@ install:
   - docker-compose -f docker-compose.ci.yml build
 
 script:
-  - docker-compose -f docker-compose.ci.yml run webapp bash -c "python manage.py migrate && python manage.py test"
+  - docker-compose -f docker-compose.ci.yml run webapp
 
 after_script:
   - docker-compose rm -f
