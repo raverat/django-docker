@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/django-docker
     docker:
       - image: raverat/django-docker-example:0.0.1
-      - image: mysql:5.5
+      - image: circleci/mysql:5.5
         environment:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: example
@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Create results directory
           command: |
-            mkdir -p $TEST_RESULTS
+            mkdir -p /tmp/test-results
 
       - run:
           name: Run unittest
@@ -41,8 +41,8 @@ jobs:
             python manage.py test
 
       - store_test_results:
-          path: $TEST_RESULTS
+          path: /tmp/test-results
 
       - store_artifacts:
-          path: test-results
+          path: /tmp/test-results
           destination: django-docker
