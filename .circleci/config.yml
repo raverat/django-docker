@@ -6,6 +6,7 @@ jobs:
     docker:
       - image: raverat/django-docker-example:0.0.1
       - image: circleci/mysql:5.5
+        name: mysql
         environment:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: example
@@ -23,7 +24,7 @@ jobs:
           command: |
             for i in `seq 1 30`;
             do
-              mysql -h 127.0.0.1 -u django -ppassword -e 'SELECT 1' example && echo Success && exit 0
+              mysql -h mysql -u django -ppassword -e 'SELECT 1' example && echo Success && exit 0
               echo -n .
               sleep 1
             done
