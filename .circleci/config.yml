@@ -23,8 +23,8 @@ jobs:
           command: |
             for i in `seq 1 30`;
             do
-              mysql -h localhost -u django -ppassword -e 'SELECT 1' example && echo Success && exit 0
-              echo -n
+              mysql --host=localhost -u django -ppassword -e 'SELECT 1' example && echo Success && exit 0
+              echo -n .
               sleep 1
             done
             echo Failed waiting for MySQL && exit 1
