@@ -41,12 +41,16 @@ wait_for_mysql()
         (mysql -h $WAITFORMYSQL_HOST -P $WAITFORMYSQL_PORT -u $WAITFORMYSQL_USER -p$WAITFORMYSQL_PASSWORD -e 'SELECT 1' $WAITFORMYSQL_DATABASE) >/dev/null 2>&1
         WAITFORMYSQL_result=$?
 
+        echo "Waiting MySQL server for $WAITFORMYSQL_i seconds"
+
         if [[ $WAITFORMYSQL_result -eq 0 ]]; then
             WAITFORMYSQL_end_ts=$(date +%s)
             echoerr "$WAITFORMYSQL_cmdname: MySQL server ($WAITFORMYSQL_HOST:$WAITFORMYSQL_PORT) is available after $((WAITFORMYSQL_end_ts - WAITFORMYSQL_start_ts)) seconds"
             break
         fi
+
         WAITFORMYSQL_i=$((WAITFORMYSQL_i+1))
+
         if [[ $WAITFORMYSQL_i -gt $WAITFORMYSQL_TIMEOUT ]]; then
             WAITFORMYSQL_result=1
             break

@@ -4,7 +4,7 @@ services:
   webapp:
     build:
         context: .
-        dockerfile: Dockerfile
+        dockerfile: .circleci/images/Dockerfile
     command: ["./wait-for-mysql.sh", "-h", "mysql", "-u", "django", "-p", "password", "-d", "example", "-t", "30", "--", "bash", "-c", "python manage.py migrate && python manage.py test"]
     image: raverat/django-docker:1.0
     depends_on:
