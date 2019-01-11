@@ -12,6 +12,9 @@ jobs:
           MYSQL_DATABASE: example
           MYSQL_USER: django
           MYSQL_PASSWORD: password
+      - image: cassandra:2.1
+        name: cassandra
+
 
     environment:
       TEST_RESULTS: /tmp/test-results
@@ -29,6 +32,17 @@ jobs:
               sleep 1
             done
             echo Failed waiting for MySQL && exit 1
+
+      - run:
+          name: Waiting for C* to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z cassandra 9042 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for C* && exit 1
 
       - run:
           name: Create results directory
