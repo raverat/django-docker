@@ -7,17 +7,16 @@ jobs:
       - image: raverat/django-docker-example:0.0.1
       - image: circleci/mysql:5.5
         name: mysql
-        environment:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: example
-          MYSQL_USER: django
-          MYSQL_PASSWORD: password
       - image: cassandra:2.1
         name: cassandra
 
 
     environment:
       TEST_RESULTS: /tmp/test-results
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: example
+      MYSQL_USER: django
+      MYSQL_PASSWORD: password
 
     steps:
       - checkout
